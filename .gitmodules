@@ -1,0 +1,3 @@
+[submodule "linux-kernel-dcp"]
+	path = linux-kernel-dcp
+	url = https://github.com/kenplusplus/linux-kernel-dcp.git
