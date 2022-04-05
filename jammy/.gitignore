@@ -1,0 +1,13 @@
+linux-*/
+linux-headers*
+linux-image*
+linux-modules*
+linux-tools*
+linux-cloud-tools*
+linux-buildinfo*
+stamp-*
+__abi.current/
+.LOCK
+build/
+files
+fix-filenames
