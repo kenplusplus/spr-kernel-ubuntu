@@ -6,8 +6,6 @@ Standards-Version: 3.9.4.0
 Build-Depends:
  debhelper-compat (= 10),
  cpio,
- kernel-wedge <!stage1> <!noudeb> <!cross> <!autopkgtest>,
- dctrl-tools <!stage1> <!noudeb> <!cross> <!autopkgtest>,
  kmod <!stage1>,
  makedumpfile [amd64] <!stage1>,
  libcap-dev <!stage1>,
@@ -38,7 +36,7 @@ Build-Depends:
  dkms <!stage1>,
  curl <!stage1>,
  zstd [amd64 s390x] <!stage1>,
- dwarves [amd64 arm64 armhf ppc64el s390x] <!stage1>,
+ pahole [amd64 arm64 armhf ppc64el s390x riscv64] | dwarves (>= 1.21) [amd64 arm64 armhf ppc64el s390x riscv64] <!stage1>,
 Build-Depends-Indep:
  xmlto <!stage1>,
  docbook-utils <!stage1>,
@@ -57,11 +55,11 @@ Build-Depends-Indep:
  fonts-noto-cjk <!stage1>,
  latexmk <!stage1>,
  librsvg2-bin <!stage1>,
-Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/impish
+Vcs-Git: git://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy
 XS-Testsuite: autopkgtest
 #XS-Testsuite-Depends: gcc-4.7 binutils
 
-Package: linux-source-5.13.0
+Package: linux-source-5.15.0
 Build-Profiles: <!stage1>
 Architecture: all
 Section: devel
@@ -70,9 +68,9 @@ Provides: linux-source
 Depends: ${misc:Depends}, binutils, bzip2, coreutils
 Recommends: libc-dev, gcc, make
 Suggests: libncurses-dev | ncurses-dev, kernel-package, libqt3-dev
-Description: Linux kernel source for version 5.13.0 with Ubuntu patches
+Description: Linux kernel source for version 5.15.0 with Ubuntu patches
  This package provides the source code for the Linux kernel version
- 5.13.0.
+ 5.15.0.
  .
  This package is mainly meant for other packages to use, in order to build
  custom flavours.
@@ -85,17 +83,17 @@ Description: Linux kernel source for version 5.13.0 with Ubuntu patches
  you do not want this package. Install the appropriate linux-headers
  package instead.
 
-Package: linux-headers-5.13.0-19
+Package: linux-headers-5.15.0-23
 Build-Profiles: <!stage1>
 Architecture: all
 Multi-Arch: foreign
 Section: devel
 Priority: optional
 Depends: ${misc:Depends}, coreutils
-Description: Header files related to Linux kernel version 5.13.0
- This package provides kernel header files for version 5.13.0, for sites
+Description: Header files related to Linux kernel version 5.15.0
+ This package provides kernel header files for version 5.15.0, for sites
  that want the latest kernel headers. Please read
- /usr/share/doc/linux-headers-5.13.0-19/debian.README.gz for details
+ /usr/share/doc/linux-headers-5.15.0-23/debian.README.gz for details
 
 Package: linux-tools-common
 Build-Profiles: <!stage1>
@@ -104,23 +102,23 @@ Multi-Arch: foreign
 Section: kernel
 Priority: optional
 Depends: ${misc:Depends}, lsb-release
-Description: Linux kernel version specific tools for version 5.13.0
+Description: Linux kernel version specific tools for version 5.15.0
  This package provides the architecture independent parts for kernel
  version locked tools (such as perf and x86_energy_perf_policy) for
- version 5.13.0.
+ version 5.15.0.
 
-Package: linux-tools-5.13.0-19
+Package: linux-tools-5.15.0-23
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: devel
 Priority: optional
 Depends: ${misc:Depends}, ${shlibs:Depends}, linux-tools-common
-Description: Linux kernel version specific tools for version 5.13.0-19
+Description: Linux kernel version specific tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
  version locked tools (such as perf and x86_energy_perf_policy) for
- version 5.13.0-19 on
+ version 5.15.0-23 on
  64 bit x86.
- You probably want to install linux-tools-5.13.0-19-<flavour>.
+ You probably want to install linux-tools-5.15.0-23-<flavour>.
 
 Package: linux-cloud-tools-common
 Build-Profiles: <!stage1>
@@ -129,21 +127,21 @@ Multi-Arch: foreign
 Section: kernel
 Priority: optional
 Depends: ${misc:Depends}
-Description: Linux kernel version specific cloud tools for version 5.13.0
+Description: Linux kernel version specific cloud tools for version 5.15.0
  This package provides the architecture independent parts for kernel
- version locked tools for cloud tools for version 5.13.0.
+ version locked tools for cloud tools for version 5.15.0.
 
-Package: linux-cloud-tools-5.13.0-19
+Package: linux-cloud-tools-5.15.0-23
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf
 Section: devel
 Priority: optional
 Depends: ${misc:Depends}, ${shlibs:Depends}, linux-cloud-tools-common
-Description: Linux kernel version specific cloud tools for version 5.13.0-19
+Description: Linux kernel version specific cloud tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
- version locked tools for cloud tools for version 5.13.0-19 on
+ version locked tools for cloud tools for version 5.15.0-23 on
  64 bit x86.
- You probably want to install linux-cloud-tools-5.13.0-19-<flavour>.
+ You probably want to install linux-cloud-tools-5.15.0-23-<flavour>.
 
 Package: linux-tools-host
 Build-Profiles: <!stage1>
@@ -175,27 +173,27 @@ Architecture: all
 Section: doc
 Priority: optional
 Depends: ${misc:Depends}
-Description: Linux kernel specific documentation for version 5.13.0
- This package provides the various documents in the 5.13.0 kernel
+Description: Linux kernel specific documentation for version 5.15.0
+ This package provides the various documents in the 5.15.0 kernel
  Documentation/ subdirectory.  These document kernel subsystems, APIs, device
  drivers, and so on.  See
  /usr/share/doc/linux-doc/00-INDEX for a list of what is
  contained in each file.
 
 
-Package: linux-image-unsigned-5.13.0-19-generic
+Package: linux-image-unsigned-5.15.0-23-generic
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: kernel
 Priority: optional
 Provides: linux-image, fuse-module, kvm-api-4, redhat-cluster-modules, ivtv-modules, virtualbox-guest-modules [amd64], ${linux:rprovides}
-Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-5.13.0-19-generic
+Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-5.15.0-23-generic
 Recommends: grub-pc [amd64] | grub-efi-amd64 [amd64] | grub-efi-ia32 [amd64] | grub [amd64] | lilo [amd64] | flash-kernel [armhf arm64] | grub-efi-arm64 [arm64] | grub-efi-arm [armhf] | grub-ieee1275 [ppc64el], initramfs-tools | linux-initramfs-tool
 Breaks: flash-kernel (<< 3.90ubuntu2) [arm64 armhf], s390-tools (<< 2.3.0-0ubuntu3) [s390x]
-Conflicts: linux-image-5.13.0-19-generic
-Suggests: fdutils, linux-doc | linux-source-5.13.0, linux-tools, linux-headers-5.13.0-19-generic, linux-modules-extra-5.13.0-19-generic
-Description: Linux kernel image for version 5.13.0 on 64 bit x86 SMP
- This package contains the unsigned Linux kernel image for version 5.13.0 on
+Conflicts: linux-image-5.15.0-23-generic
+Suggests: fdutils, linux-doc | linux-source-5.15.0, linux-tools, linux-headers-5.15.0-23-generic, linux-modules-extra-5.15.0-23-generic
+Description: Linux kernel image for version 5.15.0 on 64 bit x86 SMP
+ This package contains the unsigned Linux kernel image for version 5.15.0 on
  64 bit x86 SMP.
  .
  Supports Generic processors.
@@ -206,14 +204,14 @@ Description: Linux kernel image for version 5.13.0 on 64 bit x86 SMP
  the linux-generic meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-modules-5.13.0-19-generic
+Package: linux-modules-5.15.0-23-generic
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: kernel
 Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-generic | linux-image-unsigned-5.13.0-19-generic
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.15.0-23-generic | linux-image-unsigned-5.15.0-23-generic
 Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
+Description: Linux kernel extra modules for version 5.15.0 on 64 bit x86 SMP
  Contains the corresponding System.map file, the modules built by the
  packager, and scripts that try to ensure that the system is not left in an
  unbootable state after an update.
@@ -226,14 +224,14 @@ Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
  the linux-generic meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-modules-extra-5.13.0-19-generic
+Package: linux-modules-extra-5.15.0-23-generic
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: kernel
 Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-generic | linux-image-unsigned-5.13.0-19-generic, crda | wireless-crda
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel extra modules for version 5.13.0 on
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.15.0-23-generic | linux-image-unsigned-5.15.0-23-generic, crda | wireless-crda
+Description: Linux kernel extra modules for version 5.15.0 on 64 bit x86 SMP
+ This package contains the Linux kernel extra modules for version 5.15.0 on
  64 bit x86 SMP.
  .
  Also includes the corresponding System.map file, the modules built by the
@@ -248,29 +246,29 @@ Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
  the linux-generic meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-headers-5.13.0-19-generic
+Package: linux-headers-5.15.0-23-generic
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-headers-5.13.0-19, ${shlibs:Depends}
+Depends: ${misc:Depends}, linux-headers-5.15.0-23, ${shlibs:Depends}
 Provides: linux-headers, linux-headers-3.0
-Description: Linux kernel headers for version 5.13.0 on 64 bit x86 SMP
- This package provides kernel header files for version 5.13.0 on
+Description: Linux kernel headers for version 5.15.0 on 64 bit x86 SMP
+ This package provides kernel header files for version 5.15.0 on
  64 bit x86 SMP.
  .
  This is for sites that want the latest kernel headers.  Please read
- /usr/share/doc/linux-headers-5.13.0-19/debian.README.gz for details.
+ /usr/share/doc/linux-headers-5.15.0-23/debian.README.gz for details.
 
-Package: linux-image-unsigned-5.13.0-19-generic-dbgsym
+Package: linux-image-unsigned-5.15.0-23-generic-dbgsym
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: devel
 Priority: optional
 Depends: ${misc:Depends}
 Provides: linux-debug
-Description: Linux kernel debug image for version 5.13.0 on 64 bit x86 SMP
- This package provides the unsigned kernel debug image for version 5.13.0 on
+Description: Linux kernel debug image for version 5.15.0 on 64 bit x86 SMP
+ This package provides the unsigned kernel debug image for version 5.15.0 on
  64 bit x86 SMP.
  .
  This is for sites that wish to debug the kernel.
@@ -279,67 +277,57 @@ Description: Linux kernel debug image for version 5.13.0 on 64 bit x86 SMP
  is uncompressed, and unstripped. This package also includes the
  unstripped modules.
 
-Package: linux-tools-5.13.0-19-generic
+Package: linux-tools-5.15.0-23-generic
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-tools-5.13.0-19
-Description: Linux kernel version specific tools for version 5.13.0-19
+Depends: ${misc:Depends}, linux-tools-5.15.0-23
+Description: Linux kernel version specific tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
  version locked tools (such as perf and x86_energy_perf_policy) for
- version 5.13.0-19 on
+ version 5.15.0-23 on
  64 bit x86.
 
-Package: linux-cloud-tools-5.13.0-19-generic
+Package: linux-cloud-tools-5.15.0-23-generic
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-cloud-tools-5.13.0-19
-Description: Linux kernel version specific cloud tools for version 5.13.0-19
+Depends: ${misc:Depends}, linux-cloud-tools-5.15.0-23
+Description: Linux kernel version specific cloud tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
- version locked tools for cloud for version 5.13.0-19 on
+ version locked tools for cloud for version 5.15.0-23 on
  64 bit x86.
 
-Package: linux-udebs-generic
-Build-Profiles: <!stage1> <!noudeb> <!cross> <!autopkgtest>
-XC-Package-Type: udeb
-Section: debian-installer
-Architecture: amd64 armhf arm64 ppc64el s390x
-Depends: ${udeb:Depends}
-Description: Metapackage depending on kernel udebs
- This package depends on the all udebs that the kernel build generated,
- for easier version and migration tracking.
 
-
-Package: linux-buildinfo-5.13.0-19-generic
+Package: linux-buildinfo-5.15.0-23-generic
 Build-Profiles: <!stage1>
 Architecture: amd64 armhf arm64 ppc64el s390x
 Section: kernel
 Priority: optional
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel buildinfo for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel buildinfo for version 5.13.0 on
+Description: Linux kernel buildinfo for version 5.15.0 on 64 bit x86 SMP
+ This package contains the Linux kernel buildinfo for version 5.15.0 on
  64 bit x86 SMP.
  .
  You likely do not want to install this package.
 
 
-Package: linux-image-unsigned-5.13.0-19-generic-64k
+Package: linux-image-unsigned-5.15.0-23-generic-64k
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: kernel
 Priority: optional
 Provides: linux-image, fuse-module, kvm-api-4, redhat-cluster-modules, ivtv-modules, ${linux:rprovides}
-Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-5.13.0-19-generic-64k
+Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-5.15.0-23-generic-64k
 Recommends: grub-efi-arm64 [arm64] | flash-kernel [arm64], initramfs-tools | linux-initramfs-tool
 Breaks: flash-kernel (<< 3.90ubuntu2) [arm64 armhf], s390-tools (<< 2.3.0-0ubuntu3) [s390x]
-Conflicts: linux-image-5.13.0-19-generic-64k
-Suggests: fdutils, linux-doc | linux-source-5.13.0, linux-tools, linux-headers-5.13.0-19-generic-64k, linux-modules-extra-5.13.0-19-generic-64k
-Description: Linux kernel image for version 5.13.0 on 64 bit x86 SMP
- This package contains the unsigned Linux kernel image for version 5.13.0 on
+Conflicts: linux-image-5.15.0-23-generic-64k
+Suggests: fdutils, linux-doc | linux-source-5.15.0, linux-tools, linux-headers-5.15.0-23-generic-64k, linux-modules-extra-5.15.0-23-generic-64k
+Description: Linux kernel image for version 5.15.0 on 64 bit x86 SMP
+ This package contains the unsigned Linux kernel image for version 5.15.0 on
  64 bit x86 SMP.
  .
  Supports Generic 64K pages processors.
@@ -350,14 +338,14 @@ Description: Linux kernel image for version 5.13.0 on 64 bit x86 SMP
  the linux-generic-64k meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-modules-5.13.0-19-generic-64k
+Package: linux-modules-5.15.0-23-generic-64k
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: kernel
 Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-generic-64k | linux-image-unsigned-5.13.0-19-generic-64k
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.15.0-23-generic-64k | linux-image-unsigned-5.15.0-23-generic-64k
 Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
+Description: Linux kernel extra modules for version 5.15.0 on 64 bit x86 SMP
  Contains the corresponding System.map file, the modules built by the
  packager, and scripts that try to ensure that the system is not left in an
  unbootable state after an update.
@@ -370,14 +358,14 @@ Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
  the linux-generic-64k meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-modules-extra-5.13.0-19-generic-64k
+Package: linux-modules-extra-5.15.0-23-generic-64k
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: kernel
 Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-generic-64k | linux-image-unsigned-5.13.0-19-generic-64k, crda | wireless-crda
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel extra modules for version 5.13.0 on
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.15.0-23-generic-64k | linux-image-unsigned-5.15.0-23-generic-64k, crda | wireless-crda
+Description: Linux kernel extra modules for version 5.15.0 on 64 bit x86 SMP
+ This package contains the Linux kernel extra modules for version 5.15.0 on
  64 bit x86 SMP.
  .
  Also includes the corresponding System.map file, the modules built by the
@@ -392,29 +380,29 @@ Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
  the linux-generic-64k meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-headers-5.13.0-19-generic-64k
+Package: linux-headers-5.15.0-23-generic-64k
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-headers-5.13.0-19, ${shlibs:Depends}
+Depends: ${misc:Depends}, linux-headers-5.15.0-23, ${shlibs:Depends}
 Provides: linux-headers, linux-headers-3.0
-Description: Linux kernel headers for version 5.13.0 on 64 bit x86 SMP
- This package provides kernel header files for version 5.13.0 on
+Description: Linux kernel headers for version 5.15.0 on 64 bit x86 SMP
+ This package provides kernel header files for version 5.15.0 on
  64 bit x86 SMP.
  .
  This is for sites that want the latest kernel headers.  Please read
- /usr/share/doc/linux-headers-5.13.0-19/debian.README.gz for details.
+ /usr/share/doc/linux-headers-5.15.0-23/debian.README.gz for details.
 
-Package: linux-image-unsigned-5.13.0-19-generic-64k-dbgsym
+Package: linux-image-unsigned-5.15.0-23-generic-64k-dbgsym
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: devel
 Priority: optional
 Depends: ${misc:Depends}
 Provides: linux-debug
-Description: Linux kernel debug image for version 5.13.0 on 64 bit x86 SMP
- This package provides the unsigned kernel debug image for version 5.13.0 on
+Description: Linux kernel debug image for version 5.15.0 on 64 bit x86 SMP
+ This package provides the unsigned kernel debug image for version 5.15.0 on
  64 bit x86 SMP.
  .
  This is for sites that wish to debug the kernel.
@@ -423,67 +411,57 @@ Description: Linux kernel debug image for version 5.13.0 on 64 bit x86 SMP
  is uncompressed, and unstripped. This package also includes the
  unstripped modules.
 
-Package: linux-tools-5.13.0-19-generic-64k
+Package: linux-tools-5.15.0-23-generic-64k
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-tools-5.13.0-19
-Description: Linux kernel version specific tools for version 5.13.0-19
+Depends: ${misc:Depends}, linux-tools-5.15.0-23
+Description: Linux kernel version specific tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
  version locked tools (such as perf and x86_energy_perf_policy) for
- version 5.13.0-19 on
+ version 5.15.0-23 on
  64 bit x86.
 
-Package: linux-cloud-tools-5.13.0-19-generic-64k
+Package: linux-cloud-tools-5.15.0-23-generic-64k
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-cloud-tools-5.13.0-19
-Description: Linux kernel version specific cloud tools for version 5.13.0-19
+Depends: ${misc:Depends}, linux-cloud-tools-5.15.0-23
+Description: Linux kernel version specific cloud tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
- version locked tools for cloud for version 5.13.0-19 on
+ version locked tools for cloud for version 5.15.0-23 on
  64 bit x86.
 
-Package: linux-udebs-generic-64k
-Build-Profiles: <!stage1> <!noudeb> <!cross> <!autopkgtest>
-XC-Package-Type: udeb
-Section: debian-installer
-Architecture: arm64
-Depends: ${udeb:Depends}
-Description: Metapackage depending on kernel udebs
- This package depends on the all udebs that the kernel build generated,
- for easier version and migration tracking.
 
-
-Package: linux-buildinfo-5.13.0-19-generic-64k
+Package: linux-buildinfo-5.15.0-23-generic-64k
 Build-Profiles: <!stage1>
 Architecture: arm64
 Section: kernel
 Priority: optional
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel buildinfo for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel buildinfo for version 5.13.0 on
+Description: Linux kernel buildinfo for version 5.15.0 on 64 bit x86 SMP
+ This package contains the Linux kernel buildinfo for version 5.15.0 on
  64 bit x86 SMP.
  .
  You likely do not want to install this package.
 
 
-Package: linux-image-unsigned-5.13.0-19-generic-lpae
+Package: linux-image-unsigned-5.15.0-23-generic-lpae
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: kernel
 Priority: optional
 Provides: linux-image, fuse-module, kvm-api-4, redhat-cluster-modules, ivtv-modules, ${linux:rprovides}
-Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-5.13.0-19-generic-lpae
+Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-5.15.0-23-generic-lpae
 Recommends: flash-kernel [armhf] | grub-efi-arm [armhf], initramfs-tools | linux-initramfs-tool
 Breaks: flash-kernel (<< 3.90ubuntu2) [arm64 armhf], s390-tools (<< 2.3.0-0ubuntu3) [s390x]
-Conflicts: linux-image-5.13.0-19-generic-lpae
-Suggests: fdutils, linux-doc | linux-source-5.13.0, linux-tools, linux-headers-5.13.0-19-generic-lpae, linux-modules-extra-5.13.0-19-generic-lpae
-Description: Linux kernel image for version 5.13.0 on 64 bit x86 SMP
- This package contains the unsigned Linux kernel image for version 5.13.0 on
+Conflicts: linux-image-5.15.0-23-generic-lpae
+Suggests: fdutils, linux-doc | linux-source-5.15.0, linux-tools, linux-headers-5.15.0-23-generic-lpae, linux-modules-extra-5.15.0-23-generic-lpae
+Description: Linux kernel image for version 5.15.0 on 64 bit x86 SMP
+ This package contains the unsigned Linux kernel image for version 5.15.0 on
  64 bit x86 SMP.
  .
  Supports Generic LPAE processors.
@@ -494,14 +472,14 @@ Description: Linux kernel image for version 5.13.0 on 64 bit x86 SMP
  the linux-generic-lpae meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-modules-5.13.0-19-generic-lpae
+Package: linux-modules-5.15.0-23-generic-lpae
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: kernel
 Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-generic-lpae | linux-image-unsigned-5.13.0-19-generic-lpae
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.15.0-23-generic-lpae | linux-image-unsigned-5.15.0-23-generic-lpae
 Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
+Description: Linux kernel extra modules for version 5.15.0 on 64 bit x86 SMP
  Contains the corresponding System.map file, the modules built by the
  packager, and scripts that try to ensure that the system is not left in an
  unbootable state after an update.
@@ -514,14 +492,14 @@ Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
  the linux-generic-lpae meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-modules-extra-5.13.0-19-generic-lpae
+Package: linux-modules-extra-5.15.0-23-generic-lpae
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: kernel
 Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-generic-lpae | linux-image-unsigned-5.13.0-19-generic-lpae, crda | wireless-crda
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel extra modules for version 5.13.0 on
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.15.0-23-generic-lpae | linux-image-unsigned-5.15.0-23-generic-lpae, crda | wireless-crda
+Description: Linux kernel extra modules for version 5.15.0 on 64 bit x86 SMP
+ This package contains the Linux kernel extra modules for version 5.15.0 on
  64 bit x86 SMP.
  .
  Also includes the corresponding System.map file, the modules built by the
@@ -536,29 +514,29 @@ Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
  the linux-generic-lpae meta-package, which will ensure that upgrades work
  correctly, and that supporting packages are also installed.
 
-Package: linux-headers-5.13.0-19-generic-lpae
+Package: linux-headers-5.15.0-23-generic-lpae
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-headers-5.13.0-19, ${shlibs:Depends}
+Depends: ${misc:Depends}, linux-headers-5.15.0-23, ${shlibs:Depends}
 Provides: linux-headers, linux-headers-3.0
-Description: Linux kernel headers for version 5.13.0 on 64 bit x86 SMP
- This package provides kernel header files for version 5.13.0 on
+Description: Linux kernel headers for version 5.15.0 on 64 bit x86 SMP
+ This package provides kernel header files for version 5.15.0 on
  64 bit x86 SMP.
  .
  This is for sites that want the latest kernel headers.  Please read
- /usr/share/doc/linux-headers-5.13.0-19/debian.README.gz for details.
+ /usr/share/doc/linux-headers-5.15.0-23/debian.README.gz for details.
 
-Package: linux-image-unsigned-5.13.0-19-generic-lpae-dbgsym
+Package: linux-image-unsigned-5.15.0-23-generic-lpae-dbgsym
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: devel
 Priority: optional
 Depends: ${misc:Depends}
 Provides: linux-debug
-Description: Linux kernel debug image for version 5.13.0 on 64 bit x86 SMP
- This package provides the unsigned kernel debug image for version 5.13.0 on
+Description: Linux kernel debug image for version 5.15.0 on 64 bit x86 SMP
+ This package provides the unsigned kernel debug image for version 5.15.0 on
  64 bit x86 SMP.
  .
  This is for sites that wish to debug the kernel.
@@ -567,538 +545,40 @@ Description: Linux kernel debug image for version 5.13.0 on 64 bit x86 SMP
  is uncompressed, and unstripped. This package also includes the
  unstripped modules.
 
-Package: linux-tools-5.13.0-19-generic-lpae
+Package: linux-tools-5.15.0-23-generic-lpae
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-tools-5.13.0-19
-Description: Linux kernel version specific tools for version 5.13.0-19
+Depends: ${misc:Depends}, linux-tools-5.15.0-23
+Description: Linux kernel version specific tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
  version locked tools (such as perf and x86_energy_perf_policy) for
- version 5.13.0-19 on
+ version 5.15.0-23 on
  64 bit x86.
 
-Package: linux-cloud-tools-5.13.0-19-generic-lpae
+Package: linux-cloud-tools-5.15.0-23-generic-lpae
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, linux-cloud-tools-5.13.0-19
-Description: Linux kernel version specific cloud tools for version 5.13.0-19
+Depends: ${misc:Depends}, linux-cloud-tools-5.15.0-23
+Description: Linux kernel version specific cloud tools for version 5.15.0-23
  This package provides the architecture dependant parts for kernel
- version locked tools for cloud for version 5.13.0-19 on
+ version locked tools for cloud for version 5.15.0-23 on
  64 bit x86.
 
-Package: linux-udebs-generic-lpae
-Build-Profiles: <!stage1> <!noudeb> <!cross> <!autopkgtest>
-XC-Package-Type: udeb
-Section: debian-installer
-Architecture: armhf
-Depends: ${udeb:Depends}
-Description: Metapackage depending on kernel udebs
- This package depends on the all udebs that the kernel build generated,
- for easier version and migration tracking.
 
-
-Package: linux-buildinfo-5.13.0-19-generic-lpae
+Package: linux-buildinfo-5.15.0-23-generic-lpae
 Build-Profiles: <!stage1>
 Architecture: armhf
 Section: kernel
 Priority: optional
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel buildinfo for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel buildinfo for version 5.13.0 on
+Description: Linux kernel buildinfo for version 5.15.0 on 64 bit x86 SMP
+ This package contains the Linux kernel buildinfo for version 5.15.0 on
  64 bit x86 SMP.
  .
  You likely do not want to install this package.
-
-
-Package: linux-image-unsigned-5.13.0-19-lowlatency
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: kernel
-Priority: optional
-Provides: linux-image, fuse-module, kvm-api-4, redhat-cluster-modules, ivtv-modules, virtualbox-guest-modules [amd64], ${linux:rprovides}
-Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-5.13.0-19-lowlatency
-Recommends: grub-pc [amd64] | grub-efi-amd64 [amd64] | grub-efi-ia32 [amd64] | grub [amd64] | lilo [amd64] | flash-kernel [armhf arm64] | grub-efi-arm64 [arm64] | grub-efi-arm [armhf], initramfs-tools | linux-initramfs-tool
-Breaks: flash-kernel (<< 3.90ubuntu2) [arm64 armhf], s390-tools (<< 2.3.0-0ubuntu3) [s390x]
-Conflicts: linux-image-5.13.0-19-lowlatency
-Suggests: fdutils, linux-doc | linux-source-5.13.0, linux-tools, linux-headers-5.13.0-19-lowlatency, linux-modules-extra-5.13.0-19-lowlatency
-Description: Linux kernel image for version 5.13.0 on 64 bit x86 SMP
- This package contains the unsigned Linux kernel image for version 5.13.0 on
- 64 bit x86 SMP.
- .
- Supports Lowlatency processors.
- .
- Geared toward desktop and server systems.
- .
- You likely do not want to install this package directly. Instead, install
- the linux-lowlatency meta-package, which will ensure that upgrades work
- correctly, and that supporting packages are also installed.
-
-Package: linux-modules-5.13.0-19-lowlatency
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: kernel
-Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-lowlatency | linux-image-unsigned-5.13.0-19-lowlatency
-Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
- Contains the corresponding System.map file, the modules built by the
- packager, and scripts that try to ensure that the system is not left in an
- unbootable state after an update.
- .
- Supports Lowlatency processors.
- .
- Geared toward desktop and server systems.
- .
- You likely do not want to install this package directly. Instead, install
- the linux-lowlatency meta-package, which will ensure that upgrades work
- correctly, and that supporting packages are also installed.
-
-Package: linux-modules-extra-5.13.0-19-lowlatency
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: kernel
-Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-5.13.0-19-lowlatency | linux-image-unsigned-5.13.0-19-lowlatency, crda | wireless-crda
-Description: Linux kernel extra modules for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel extra modules for version 5.13.0 on
- 64 bit x86 SMP.
- .
- Also includes the corresponding System.map file, the modules built by the
- packager, and scripts that try to ensure that the system is not left in an
- unbootable state after an update.
- .
- Supports Lowlatency processors.
- .
- Geared toward desktop and server systems.
- .
- You likely do not want to install this package directly. Instead, install
- the linux-lowlatency meta-package, which will ensure that upgrades work
- correctly, and that supporting packages are also installed.
-
-Package: linux-headers-5.13.0-19-lowlatency
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: devel
-Priority: optional
-Depends: ${misc:Depends}, linux-headers-5.13.0-19, ${shlibs:Depends}
-Provides: linux-headers, linux-headers-3.0
-Description: Linux kernel headers for version 5.13.0 on 64 bit x86 SMP
- This package provides kernel header files for version 5.13.0 on
- 64 bit x86 SMP.
- .
- This is for sites that want the latest kernel headers.  Please read
- /usr/share/doc/linux-headers-5.13.0-19/debian.README.gz for details.
-
-Package: linux-image-unsigned-5.13.0-19-lowlatency-dbgsym
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: devel
-Priority: optional
-Depends: ${misc:Depends}
-Provides: linux-debug
-Description: Linux kernel debug image for version 5.13.0 on 64 bit x86 SMP
- This package provides the unsigned kernel debug image for version 5.13.0 on
- 64 bit x86 SMP.
- .
- This is for sites that wish to debug the kernel.
- .
- The kernel image contained in this package is NOT meant to boot from. It
- is uncompressed, and unstripped. This package also includes the
- unstripped modules.
-
-Package: linux-tools-5.13.0-19-lowlatency
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: devel
-Priority: optional
-Depends: ${misc:Depends}, linux-tools-5.13.0-19
-Description: Linux kernel version specific tools for version 5.13.0-19
- This package provides the architecture dependant parts for kernel
- version locked tools (such as perf and x86_energy_perf_policy) for
- version 5.13.0-19 on
- 64 bit x86.
-
-Package: linux-cloud-tools-5.13.0-19-lowlatency
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: devel
-Priority: optional
-Depends: ${misc:Depends}, linux-cloud-tools-5.13.0-19
-Description: Linux kernel version specific cloud tools for version 5.13.0-19
- This package provides the architecture dependant parts for kernel
- version locked tools for cloud for version 5.13.0-19 on
- 64 bit x86.
-
-Package: linux-udebs-lowlatency
-Build-Profiles: <!stage1> <!noudeb> <!cross> <!autopkgtest>
-XC-Package-Type: udeb
-Section: debian-installer
-Architecture: amd64
-Depends: ${udeb:Depends}
-Description: Metapackage depending on kernel udebs
- This package depends on the all udebs that the kernel build generated,
- for easier version and migration tracking.
-
-
-Package: linux-buildinfo-5.13.0-19-lowlatency
-Build-Profiles: <!stage1>
-Architecture: amd64
-Section: kernel
-Priority: optional
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Built-Using: ${linux:BuiltUsing}
-Description: Linux kernel buildinfo for version 5.13.0 on 64 bit x86 SMP
- This package contains the Linux kernel buildinfo for version 5.13.0 on
- 64 bit x86 SMP.
- .
- You likely do not want to install this package.
-
-
-Package: kernel-image-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: kernel-image, efi-modules, ext3-modules, ext4-modules, squashfs-modules
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Description: kernel image and system map
-
-Package: fat-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: fat-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: FAT filesystem support
- This includes Windows FAT and VFAT support.
-
-Package: fb-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: fb-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Framebuffer modules
-
-Package: firewire-core-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: firewire-core-modules
-Depends: kernel-image-5.13.0-19-generic-di, storage-core-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Firewire (IEEE-1394) Support
-
-Package: floppy-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: floppy-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Floppy driver support
-
-Package: fs-core-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: fs-core-modules, ext2-modules, jfs-modules, reiserfs-modules, xfs-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Base filesystem modules
- This includes jfs, reiserfs and xfs.
-
-Package: fs-secondary-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: fs-secondary-modules, btrfs-modules, ntfs-modules, hfs-modules
-Depends: kernel-image-5.13.0-19-generic-di, fat-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Extra filesystem modules
- This includes support for Windows NTFS and MacOS HFS/HFSPlus
-
-Package: input-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: input-modules
-Depends: kernel-image-5.13.0-19-generic-di, usb-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Support for various input methods
-
-Package: md-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: md-modules, crypto-dm-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Multi-device support (raid, device-mapper, lvm)
-
-Package: nic-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: nic-modules
-Depends: kernel-image-5.13.0-19-generic-di, nic-shared-modules-5.13.0-19-generic-di, virtio-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Network interface support
-
-Package: nic-pcmcia-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: nic-pcmcia-modules
-Depends: kernel-image-5.13.0-19-generic-di, nic-shared-modules-5.13.0-19-generic-di, nic-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: PCMCIA network interface support
-
-Package: nic-usb-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: nic-usb-modules
-Depends: kernel-image-5.13.0-19-generic-di, nic-shared-modules-5.13.0-19-generic-di, usb-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: USB network interface support
-
-Package: nic-shared-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: nic-shared-modules
-Depends: kernel-image-5.13.0-19-generic-di, crypto-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: nic shared modules
-  This package contains modules which support nic modules
-
-Package: parport-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: parport-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Parallel port support
-
-Package: pata-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: pata-modules
-Depends: kernel-image-5.13.0-19-generic-di, storage-core-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: PATA support modules
-
-Package: pcmcia-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: pcmcia-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: PCMCIA Modules
-
-Package: pcmcia-storage-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: pcmcia-storage-modules
-Depends: kernel-image-5.13.0-19-generic-di, scsi-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: PCMCIA storage support
-
-Package: plip-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: plip-modules
-Depends: kernel-image-5.13.0-19-generic-di, nic-shared-modules-5.13.0-19-generic-di, parport-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: PLIP (parallel port) networking support
-
-Package: ppp-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: ppp-modules
-Depends: kernel-image-5.13.0-19-generic-di, nic-shared-modules-5.13.0-19-generic-di, serial-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: PPP (serial port) networking support
-
-Package: sata-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: sata-modules
-Depends: kernel-image-5.13.0-19-generic-di, storage-core-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: SATA storage support
-
-Package: scsi-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: scsi-modules
-Depends: kernel-image-5.13.0-19-generic-di, storage-core-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: SCSI storage support
-
-Package: serial-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: serial-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Serial port support
-
-Package: storage-core-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: storage-core-modules, loop-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Core storage support
- Includes core SCSI, LibATA, USB-Storage. Also includes related block
- devices for CD, Disk and Tape medium (and IDE Floppy).
-
-Package: usb-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: usb-modules
-Depends: kernel-image-5.13.0-19-generic-di, storage-core-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Core USB support
-
-Package: nfs-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: nfs-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: NFS filesystem drivers
- Includes the NFS client driver, and supporting modules.
-
-Package: block-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: block-modules, nbd-modules
-Depends: kernel-image-5.13.0-19-generic-di, storage-core-modules-5.13.0-19-generic-di, parport-modules-5.13.0-19-generic-di, virtio-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Block storage devices
- This package contains the block storage devices, including DAC960 and
- paraide.
-
-Package: message-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: message-modules
-Depends: kernel-image-5.13.0-19-generic-di, storage-core-modules-5.13.0-19-generic-di, scsi-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: Fusion and i2o storage modules
- This package containes the fusion and i2o storage modules.
-
-Package: crypto-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: crypto-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: extra
-Description: crypto modules
- This package contains crypto modules.
-
-Package: virtio-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: virtio-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: VirtIO Modules
- Includes modules for VirtIO (virtual machine, generally kvm guests)
-
-Package: mouse-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: mouse-modules
-Depends: kernel-image-5.13.0-19-generic-di, input-modules-5.13.0-19-generic-di, usb-modules-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: extra
-Description: Mouse support
- This package contains mouse drivers for the Linux kernel.
-
-Package: vlan-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: vlan-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: extra
-Description: vlan modules
- This package contains vlan (8021.Q) modules.
-
-Package: ipmi-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: ipmi-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: standard
-Description: ipmi modules
-
-Package: multipath-modules-5.13.0-19-generic-di
-Package-Type: udeb
-Provides: multipath-modules
-Depends: kernel-image-5.13.0-19-generic-di
-Architecture: amd64
-Kernel-Version: 5.13.0-19-generic
-Section: debian-installer
-Priority: extra
-Description: DM-Multipath support
-  This package contains modules for device-mapper multipath support.
 
