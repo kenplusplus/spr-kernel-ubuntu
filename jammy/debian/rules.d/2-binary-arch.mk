@@ -24,7 +24,7 @@ $(stampdir)/stamp-prepare-%: config-prepare-check-%
 	@echo Debug: $@
 	@touch $@
 $(stampdir)/stamp-prepare-tree-%: target_flavour = $*
-$(stampdir)/stamp-prepare-tree-%: $(commonconfdir)/config.common.$(family) $(archconfdir)/config.common.$(arch) $(archconfdir)/config.flavour.% debian/scripts/fix-filenames
+$(stampdir)/stamp-prepare-tree-%: $(commonconfdir)/config.common.$(family) $(archconfdir)/config.common.$(arch) $(archconfdir)/config.spr-bkc $(archconfdir)/config.flavour.% debian/scripts/fix-filenames
 	@echo Debug: $@
 	install -d $(builddir)/build-$*
 	touch $(builddir)/build-$*/ubuntu-build
@@ -117,7 +117,8 @@ $(stampdir)/stamp-install-%: MODSECKEY=$(builddir)/build-$*/certs/signing_key.pe
 $(stampdir)/stamp-install-%: MODPUBKEY=$(builddir)/build-$*/certs/signing_key.x509
 $(stampdir)/stamp-install-%: build_dir=$(builddir)/build-$*
 $(stampdir)/stamp-install-%: dkms_dir=$(call dkms_dir_prefix,$(builddir)/build-$*)
-$(stampdir)/stamp-install-%: enable_zfs = $(call custom_override,do_zfs,$*)
+#$(stampdir)/stamp-install-%: enable_zfs = $(call custom_override,do_zfs,$*)
+$(stampdir)/stamp-install-%: enable_zfs = false
 $(stampdir)/stamp-install-%: enable_v4l2loopback = $(call custom_override,do_v4l2loopback,$*)
 $(stampdir)/stamp-install-%: dbgpkgdir_dkms = $(if $(filter true,$(skipdbg)),"",$(dbgpkgdir)/usr/lib/debug/lib/modules/$(abi_release)-$*/kernel)
 $(stampdir)/stamp-install-%: $(stampdir)/stamp-build-% $(stampdir)/stamp-install-headers
@@ -351,7 +352,7 @@ endif
 	#
 	# Remove files which are generated at installation by postinst,
 	# except for modules.order and modules.builtin
-	# 
+	#
 	# NOTE: need to keep this list in sync with postrm
 	#
 	mkdir $(pkgdir)/lib/modules/$(abi_release)-$*/_
